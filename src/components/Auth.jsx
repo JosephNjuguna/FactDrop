@@ -31,7 +31,7 @@ function Auth() {
                         <div className="SignIn">
                             <h3>Welcome Back</h3>
                             <p>Sign in to see facts picked for you.</p>
-                            <button>continue with github</button>
+                            <button className="github">continue with github</button>
                             <p>or use your email</p>
                             <form onSubmit={handleSubmit}>
                                 <p>Email</p>
@@ -39,7 +39,7 @@ function Auth() {
                                 <p>Password</p>
                                 <input type="password" placeholder="enter your password" />
                                 <p>Forgot password?</p>
-                                <button>Sign In</button>
+                                <button className="signin">Sign In</button>
                                 <p>New Here? <b>Create an Account</b></p>
                             </form>
                         </div>
