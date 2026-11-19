@@ -1,37 +1,90 @@
 @reference "tailwindcss";
 
 main {
-  @apply flex justify-center min-h-screen bg-blue-100;
+  @apply flex  justify-center min-h-screen bg-blue-100;
+  @apply flex border-gray-100;
+
 }
 
 .center {
-  @apply flex w-1/2 bg-red-50
+  @apply flex w-1/2 bg-white;
+  @apply p-4 rounded self-center;
 }
 
 .intro {
   @apply flex flex-col justify-center;
-  @apply p-4
+  @apply p-4 w-full;
+
 }
 
 .auth {
-  @apply flex flex-col justify-center
+  @apply flex flex-col justify-center;
+  @apply w-full;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 .swicthAuthMode {
-  @apply flex justify-around
+  @apply flex gap-1 rounded-xl bg-gray-200 p-1 mb-4;
 }
+
+/* every tab */
+.swicthAuthMode p {
+  @apply flex-1 cursor-pointer rounded-lg py-2 text-center text-gray-500 transition;
+  @apply hover:text-black;
+}
+
+/* the selected tab (React adds the "active" class) */
+.swicthAuthMode p.active {
+  @apply bg-white font-bold text-black shadow;
+}
+
+/* the clickable links at the bottom of each form */
+.SignUp b,
+.SignIn b {
+  @apply cursor-pointer text-blue-600 hover:underline;
+}
+
+
+
+
+
+
+
+
+
+
+
+.SignUp {
+  @apply bg-blue-50;
+  @apply p-4 w-full;
+}
+
+
 
 .SignIn {
   @apply bg-blue-50;
-  @apply p-4
+  @apply p-4 w-full;
 }
 
 .auth input {
-  @apply w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none
+  @apply w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none;
 }
 
 .auth .github {
   @apply rounded-lg bg-blue-500 px-4 py-2 font-semibold text-white hover:bg-blue-700;
+  @apply w-full;
 }
 
 .auth .authbutton {

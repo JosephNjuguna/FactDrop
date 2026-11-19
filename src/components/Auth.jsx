@@ -1,15 +1,18 @@
 import { useState } from "react";
-import React from "react";
 import '../css/auth.css'
 
 function Auth() {
-    
+    const [isSignUp, setIsSignUp] = useState(false);
+
     function handleSignUp(event) {
+        event.preventDefault();
         console.log(event);
     }
     function handleSignIn(event) {
+        event.preventDefault();
         console.log(event);
     }
+
     return (
         <>
             <main>
@@ -24,50 +27,60 @@ function Auth() {
                             <h3>An octopus has three hearts, and two of them stop beating when it swims.</h3>
                         </div>
                     </div>
+
                     <div className="auth">
                         <div className="swicthAuthMode">
-                            <p>Sign In</p>
-                            <p>Sign Up</p>
+                            <p className={!isSignUp ? "active" : ""} onClick={() => setIsSignUp(false)}>Sign In</p>
+                            <p className={isSignUp ? "active" : ""} onClick={() => setIsSignUp(true)}>Sign Up</p>
                         </div>
 
-                        <div className="SignUp">
-                            <h3>Create you account</h3>
-                            <button className="github">continue with github</button>
-                            <p>or use your email</p>
-                            <form onSubmit={handleSignUp}>
-                                <p>Email</p>
-                                <input type="text" placeholder="yor@example.com" />
-                                <p>Password</p>
-                                <input type="password" placeholder="enter your password" />
+                        {isSignUp ? (
+                            <div className="SignUp">
+                                <h3>Create your account</h3>
+                                <button className="github">continue with github</button>
+                                <p>or use your email</p>
+                                <form onSubmit={handleSignUp}>
 
-                                <p>Comfirm Password</p>
-                                <input type="password" placeholder="enter same password again" />
-                                <button className="authbutton">Sign Up</button>
-                                <p>Already have an account? <b>Sign In</b></p>
-                            </form>
-                        </div>
+                                    <p>Email</p>
+                                    <input type="text" placeholder="your@example.com" />
 
+                                    <p>Password</p>
+                                    <input type="password" placeholder="enter your password" />
 
-                        <div className="SignIn">
-                            <h3>Welcome Back</h3>
-                            <p>Sign in to see facts picked for you.</p>
-                            <button className="github">continue with github</button>
-                            <p>or use your email</p>
-                            <form onSubmit={handleSignIn}>
-                                <p>Email</p>
-                                <input type="text" placeholder="yor@example.com" />
-                                <p>Password</p>
-                                <input type="password" placeholder="enter your password" />
-                                <p>Forgot password?</p>
-                                <button className="authbutton">Sign In</button>
-                                <p>New Here? <b>Create an Account</b></p>
-                            </form>
-                        </div>
+                                    <p>Confirm Password</p>
+                                    <input type="password" placeholder="enter same password again" />
+
+                                    <button className="authbutton">Sign Up</button>
+                                    <p>
+                                        Already have an account?{" "}
+                                        <b onClick={() => setIsSignUp(false)}>Sign In</b>
+                                    </p>
+                                </form>
+                            </div>
+                        ) : (
+                            <div className="SignIn">
+                                <h3>Welcome Back</h3>
+                                <button className="github">continue with github</button>
+                                <p>or use your email</p>
+
+                                <form onSubmit={handleSignIn}>
+                                    <p>Email</p>
+                                    <input type="text" placeholder="your@example.com" />
+                                    <p>Password</p>
+                                    <input type="password" placeholder="enter your password" />
+                                    <p>Forgot password?</p>
+                                    <button className="authbutton">Sign In</button>
+                                    <p>
+                                        New Here?{" "}
+                                        <b onClick={() => setIsSignUp(true)}>Create an Account</b>
+                                    </p>
+
+                                </form>
+                            </div>
+                        )}
                     </div>
                 </div>
-
             </main>
-
         </>
     )
 }
