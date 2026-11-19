@@ -3,7 +3,11 @@ import React from "react";
 import '../css/auth.css'
 
 function Auth() {
-    function handleSubmit(event) {
+    
+    function handleSignUp(event) {
+        console.log(event);
+    }
+    function handleSignIn(event) {
         console.log(event);
     }
     return (
@@ -25,21 +29,37 @@ function Auth() {
                             <p>Sign In</p>
                             <p>Sign Up</p>
                         </div>
-                        <div className="SignUp">
 
+                        <div className="SignUp">
+                            <h3>Create you account</h3>
+                            <button className="github">continue with github</button>
+                            <p>or use your email</p>
+                            <form onSubmit={handleSignUp}>
+                                <p>Email</p>
+                                <input type="text" placeholder="yor@example.com" />
+                                <p>Password</p>
+                                <input type="password" placeholder="enter your password" />
+
+                                <p>Comfirm Password</p>
+                                <input type="password" placeholder="enter same password again" />
+                                <button className="authbutton">Sign Up</button>
+                                <p>Already have an account? <b>Sign In</b></p>
+                            </form>
                         </div>
+
+
                         <div className="SignIn">
                             <h3>Welcome Back</h3>
                             <p>Sign in to see facts picked for you.</p>
                             <button className="github">continue with github</button>
                             <p>or use your email</p>
-                            <form onSubmit={handleSubmit}>
+                            <form onSubmit={handleSignIn}>
                                 <p>Email</p>
                                 <input type="text" placeholder="yor@example.com" />
                                 <p>Password</p>
                                 <input type="password" placeholder="enter your password" />
                                 <p>Forgot password?</p>
-                                <button className="signin">Sign In</button>
+                                <button className="authbutton">Sign In</button>
                                 <p>New Here? <b>Create an Account</b></p>
                             </form>
                         </div>
