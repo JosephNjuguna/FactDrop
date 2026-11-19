@@ -1,0 +1,25 @@
+@reference "tailwindcss";
+
+main{
+  @apply flex justify-center min-h-screen bg-blue-100;
+}
+
+.center{
+  @apply flex w-1/2 bg-red-50
+}
+
+.intro{
+  @apply flex flex-col justify-center;
+  @apply p-4
+}
+.auth{
+  @apply flex flex-col justify-center 
+}
+.swicthAuthMode{
+  @apply flex justify-around
+}
+
+.SignIn {
+  @apply bg-blue-50;
+  @apply p-4
+}
