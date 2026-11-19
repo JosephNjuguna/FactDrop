@@ -1,10 +1,14 @@
 import { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { doc, getDoc, setDoc, serverTimestamp } from "firebase/firestore";
+
+import { useNavigate } from "react-router-dom";
+
 import { auth, db } from "../../firebase";
 import '../../css/auth.css';
 
 function SignIn({ switchToSignUp }) {
+     const navigate = useNavigate();
 
     const [signinEmail, setEmail] = useState("");
     const [signinPassword, setPassword] = useState("");
@@ -26,7 +30,7 @@ function SignIn({ switchToSignUp }) {
 
     function handlePasswordChange(value) {
         setPassword(value);
-        setFormError(""); // clear the old error when they start retyping
+        setFormError("");
     }
 
     async function handleSignIn(event) {
@@ -43,11 +47,9 @@ function SignIn({ switchToSignUp }) {
 
         setLoading(true);
         try {
-            // 1. Firebase Auth compares the email and password for you
             const cred = await signInWithEmailAndPassword(auth, signinEmail, signinPassword);
             const user = cred.user;
 
-            // 2. Check that the profile document exists
             const profileRef = doc(db, "users", user.uid);
             const profileSnap = await getDoc(profileRef);
 
@@ -61,7 +63,8 @@ function SignIn({ switchToSignUp }) {
             }
 
             console.log("Signed in:", user.uid);
-            // redirect to your home page here
+
+            navigate("/home");
 
         } catch (error) {
             console.log(error.code);
@@ -75,7 +78,7 @@ function SignIn({ switchToSignUp }) {
             } else if (error.code === "auth/too-many-requests") {
                 setFormError("Too many attempts. Try again later.");
             } else if (error.code === "permission-denied") {
-                setFormError("Signed in, but reading your profile was blocked (check Firestore rules)");
+                setFormError("Signed in, but reading your profile failed");
             } else {
                 setFormError("Something went wrong. Try again.");
             }
