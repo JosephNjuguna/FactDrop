@@ -28,10 +28,11 @@ function Auth() {
                         </div>
 
                         {isSignUp ? (
-                            <SignUp/>
+                            <SignUp switchToSignIn={() => setIsSignUp(false)} />
                         ) : (
-                            <SignIn/>
+                            <SignIn switchToSignUp={() => setIsSignUp(true)} />
                         )}
+
                     </div>
                 </div>
             </main>
