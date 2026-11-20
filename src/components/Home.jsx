@@ -1,6 +1,15 @@
 import { useEffect, useState } from "react";
 import Facts from "./Home/Facts";
 
+
+async function fetchRandomFact() {
+    const res = await fetch("https://uselessfacts.jsph.pl/api/v2/facts/random");
+    if (!res.ok) throw new Error("Failed to fetch fact");
+    const data = await res.json();
+    // Map the API's shape to what FactCard expects
+    return { id: data.id, text: data.text, category: "random" };
+}
+
 function Home() {
     const [facts, setFacts] = useState([]);
     const [factsError, setFactsError] = useState("");
@@ -27,9 +36,23 @@ function Home() {
         fetchfacts()
     }, []);
 
+
+    async function handleLiked(id) {
+        setFacts((prev) => prev.filter((f) => f.id !== id));//filter out like fact from the ui.
+        try {
+            const next = await fetchRandomFact();
+            setFacts((prev) =>
+                prev.some((f) => f.id === next.id) ? prev : [...prev, next]
+            );
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+
     return (
         <>
-            <Facts facts={facts} />
+            <Facts facts={facts} updatelikedCard={handleLiked}/>
             <p>this is home {factsError}</p>
         </>
     )

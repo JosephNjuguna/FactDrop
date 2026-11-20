@@ -1,29 +1,46 @@
 import { useState } from "react";
+import { doc, setDoc, arrayUnion, serverTimestamp } from "firebase/firestore";
+import { db } from "../../firebase";
 
-function FactCard({ fact }) {
-    const [like, setLikes] = useState("");
+function FactCard({ fact, userEmail, onLiked }) {
+    const [isLiking, setIsLiking] = useState(false);//stop user from double clicking :  tracking state.
+    const [error, setError] = useState(null);
 
-    function handleLikes(id) {
-        setLikes(id);
-        //once user clicks the like button,
-        //i am supposed to send it to the db
-        //first we check if the same fact has been liked before
-        //if it has been liked before then we just add user email to the list
-        //if it hasnt been liked then we add it to the facts collection with the 
-        //id from the api as its unique id
-        //then update the ui as liked. 
-        //make it dissapear then load new fact an load at the bottom of the existing facts 
-        //so it becomes an infinite load of facts(doom scrolling) 
-        console.log("this post has been liked : ", id);
+    async function handleLikes() {
+        if (isLiking) return;
+        setIsLiking(true);
+        setError(null);
+
+        try {
+            const factRef = doc(db, "facts", String(fact.id));
+            await setDoc(
+                factRef,
+                {
+                    text: fact.text,
+                    category: fact.category,
+                    likedBy: arrayUnion(userEmail),
+                    updatedAt: serverTimestamp(),
+                },
+                { merge: true }
+            );
+            onLiked(fact.id);
+        } catch (err) {
+            console.error(err);
+            setError("Couldn't save your like. Try again.");
+            setIsLiking(false);
+        }
     }
 
     return (
         <div>
             <p>category: {fact.category}</p>
-            <p>fact : {fact.text}</p>
-            <button onClick={() => handleLikes(fact.id)}>like</button>
+            <p>fact: {fact.text}</p>
+            <button onClick={handleLikes} disabled={isLiking}>
+                {isLiking ? "saving..." : "like"}
+            </button>
+            {error && <p style={{ color: "red" }}>{error}</p>}
         </div>
-    )
+    );
 }
 
 export default FactCard;
