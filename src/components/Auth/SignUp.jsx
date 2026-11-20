@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, getDoc, setDoc, serverTimestamp } from "firebase/firestore";
-import { auth, db } from "../../firebase"; // adjust the path to where your firebase.js is
+import { auth, db } from "../../firebase";
 import '../../css/auth.css';
 
-// receives a function from the parent so the "Sign In" link can switch forms
 function SignUp({ switchToSignIn }) {
 
     const [signupEmail, setEmail] = useState("");
@@ -14,7 +13,7 @@ function SignUp({ switchToSignIn }) {
     const [emailError, setEmailError] = useState("");
     const [passwordError, setPasswordError] = useState("");
     const [confirmError, setConfirmError] = useState("");
-    const [formError, setFormError] = useState(""); // errors from Firebase
+    const [formError, setFormError] = useState("");
     const [loading, setLoading] = useState(false);
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -79,7 +78,8 @@ function SignUp({ switchToSignIn }) {
                 });
             }
             console.log("Account created:", user.uid);
-            //redirect here
+            navigate("/home");
+
         } catch (error) {
             console.log(error.code);
 
