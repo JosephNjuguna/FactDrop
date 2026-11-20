@@ -58,7 +58,6 @@ function TrendingFacts({ userEmail }) {
         try {
             await updateDoc(doc(db, "facts", String(fact.id)), { likedBy: alreadyLiked ? arrayRemove(userEmail) : arrayUnion(userEmail), updatedAt: serverTimestamp() });
         } catch (err) {
-            console.error(err);
             updateLikedBy(fact.id, previousLikedBy);
             setError("Couldn't save your like. Try again.");
         } finally {
