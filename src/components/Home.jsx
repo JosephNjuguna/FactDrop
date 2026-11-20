@@ -90,7 +90,7 @@ function Home() {
                     {activeTab === "facts" && (
                         <Facts facts={facts} updatelikedCard={handleLiked} userEmail={userEmail} factsError={factsError}/>
                     )}
-                    {activeTab === "trending" && <TrendingFacts />}
+                    {activeTab === "trending" && <TrendingFacts userEmail={userEmail}/>}
                     {activeTab === "liked" && <FactsYouLiked />}
                     {activeTab === "profile" && <Profile />}
                 </div>
