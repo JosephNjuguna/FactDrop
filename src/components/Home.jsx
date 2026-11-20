@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
-import Facts from "./Home/Facts";
 import { useAuth } from "../components/Helpers/AuthContext";
+import '../css/facts.css';
+
+import Facts from "./Home/Facts";
+import FactsYouLiked from "./Home/FactsYouLiked";
+import Profile from "./Home/Profile";
+import TrendingFacts from "./Home/TrendingFacts";
 
 
 async function fetchRandomFact() {
@@ -9,7 +14,6 @@ async function fetchRandomFact() {
         throw new Error("Failed to fetch fact");
     }
     const data = await res.json();
-    console.log(data.fact);
 
     // Map the API's shape to what FactCard expects
     return { id: data.fact.id, text: data.fact.text, category: data.fact.category };
@@ -42,7 +46,7 @@ function Home() {
                     console.log(err.message);
                 });
         }
-        fetchfacts()
+        // fetchfacts()
     }, []);
 
     async function handleLiked(id) {
@@ -59,8 +63,22 @@ function Home() {
 
     return (
         <>
-            <Facts facts={facts} updatelikedCard={handleLiked} userEmail={userEmail} />
-            <p>this is home {factsError}</p>
+            <main>
+                <div className="center">
+                    <div className="factsNav">
+                        <button>Facts For You</button>
+                        <button>Trending Facts</button>
+                        <button>Facts You Liked</button>
+                        <button>Profile Stats</button>
+                    </div>
+                    <Facts facts={facts} updatelikedCard={handleLiked} userEmail={userEmail} />
+                    <TrendingFacts/>
+                    <FactsYouLiked/>
+                    <Profile/>
+                </div>
+
+            </main>
+
         </>
     )
 }
