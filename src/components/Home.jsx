@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Facts from "./Home/Facts";
 
 function Home() {
     const [facts, setFacts] = useState([]);
@@ -15,8 +16,8 @@ function Home() {
                     return res.json();
                 })
                 .then((data) => {
-                    setFacts(data);
-                    console.log(data);
+                    setFacts(data.facts);
+                    console.log(data.facts);
                 })
                 .catch((err) => {
                     setFactsError('Fetching Facts failed.')
@@ -26,10 +27,9 @@ function Home() {
         fetchfacts()
     }, []);
 
-
-
     return (
         <>
+            <Facts facts={facts} />
             <p>this is home {factsError}</p>
         </>
     )
