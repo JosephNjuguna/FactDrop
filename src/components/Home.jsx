@@ -19,10 +19,16 @@ async function fetchRandomFact() {
     return { id: data.fact.id, text: data.fact.text, category: data.fact.category };
 }
 
+const TABS = [
+    { id: "facts", label: "Facts For You" },
+    { id: "trending", label: "Trending Facts" },
+    { id: "liked", label: "Facts You Liked" },
+    { id: "profile", label: "Profile Stats" },
+];
+
 function Home() {
     const { user } = useAuth();
     const userEmail = user.email;
-
 
     const [facts, setFacts] = useState([]);
     const [factsError, setFactsError] = useState("");
@@ -46,7 +52,7 @@ function Home() {
                     console.log(err.message);
                 });
         }
-        // fetchfacts()
+        fetchfacts()
     }, []);
 
     async function handleLiked(id) {
@@ -61,20 +67,32 @@ function Home() {
         }
     }
 
+    const [activeTab, setActiveTab] = useState("facts");
     return (
         <>
             <main>
                 <div className="center">
+
                     <div className="factsNav">
-                        <button>Facts For You</button>
-                        <button>Trending Facts</button>
-                        <button>Facts You Liked</button>
-                        <button>Profile Stats</button>
+                        {TABS.map((tab) => (
+                            <button
+                                key={tab.id}
+                                onClick={() => setActiveTab(tab.id)}
+                                className={`px-4 py-2 border-b-2 ${activeTab === tab.id
+                                        ? "border-red-500 text-red-500 font-bold"
+                                        : "border-transparent text-gray-500 hover:text-black"
+                                    }`}
+                            >
+                                {tab.label}
+                            </button>
+                        ))}
                     </div>
-                    <Facts facts={facts} updatelikedCard={handleLiked} userEmail={userEmail} />
-                    <TrendingFacts/>
-                    <FactsYouLiked/>
-                    <Profile/>
+                    {activeTab === "facts" && (
+                        <Facts facts={facts} updatelikedCard={handleLiked} userEmail={userEmail} factsError={factsError}/>
+                    )}
+                    {activeTab === "trending" && <TrendingFacts />}
+                    {activeTab === "liked" && <FactsYouLiked />}
+                    {activeTab === "profile" && <Profile />}
                 </div>
 
             </main>
