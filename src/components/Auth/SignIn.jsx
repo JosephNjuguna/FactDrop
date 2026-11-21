@@ -2,13 +2,14 @@ import { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { doc, getDoc, setDoc, serverTimestamp } from "firebase/firestore";
 
-import { useNavigate } from "react-router-dom";
-
 import { auth, db } from "../../firebase";
 import '../../css/auth.css';
 
+import { useNavigate } from "react-router-dom";
+import { githubAuth } from "../../utils/githubAuth";
+
 function SignIn({ switchToSignUp }) {
-     const navigate = useNavigate();
+    const navigate = useNavigate();
 
     const [signinEmail, setEmail] = useState("");
     const [signinPassword, setPassword] = useState("");
@@ -25,6 +26,20 @@ function SignIn({ switchToSignUp }) {
             setEmailError("");
         } else {
             setEmailError("Enter a valid email address");
+        }
+    }
+
+    async function handleGithubClick() {
+        setFormError("");
+        setLoading(true);
+
+        const error = await githubAuth();
+
+        setLoading(false);
+        if (error === null) {
+            navigate("/home");
+        } else {
+            setFormError(error);
         }
     }
 
@@ -90,8 +105,16 @@ function SignIn({ switchToSignUp }) {
     return (
         <>
             <div className="SignIn">
+
                 <h3>Welcome Back</h3>
-                <button type="button" className="github">continue with github</button>
+                <button
+                    type="button"
+                    className="github"
+                    onClick={handleGithubClick}
+                    disabled={loading}>
+                    {loading ? "Please wait..." : "continue with github"}
+                </button>
+
                 <p>or use your email</p>
 
                 <form onSubmit={handleSignIn}>

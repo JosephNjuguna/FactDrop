@@ -14,8 +14,6 @@ async function fetchRandomFact() {
         throw new Error("Failed to fetch fact");
     }
     const data = await res.json();
-
-    // Map the API's shape to what FactCard expects
     return { id: data.fact.id, text: data.fact.text, category: data.fact.category };
 }
 

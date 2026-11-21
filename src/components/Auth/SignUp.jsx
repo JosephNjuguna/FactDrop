@@ -4,6 +4,11 @@ import { doc, getDoc, setDoc, serverTimestamp } from "firebase/firestore";
 import { auth, db } from "../../firebase";
 import '../../css/auth.css';
 
+
+
+import { useNavigate } from "react-router-dom";
+import { githubAuth } from "../../utils/githubAuth";
+
 function SignUp({ switchToSignIn }) {
 
     const [signupEmail, setEmail] = useState("");
@@ -18,6 +23,23 @@ function SignUp({ switchToSignIn }) {
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
+
+
+    const navigate = useNavigate();
+
+    async function handleGithubClick() {
+        setFormError("");
+        setLoading(true);
+
+        const error = await githubAuth();
+
+        setLoading(false);
+        if (error === null) {
+            navigate("/home");
+        } else {
+            setFormError(error); // empty string = no message shown
+        }
+    }
 
     function verifyEmail(value) {
         setEmail(value);
@@ -103,7 +125,15 @@ function SignUp({ switchToSignIn }) {
         <>
             <div className="SignUp">
                 <h3>Create your account</h3>
-                <button type="button" className="github">continue with github</button>
+                <hr />
+                <button
+                    type="button"
+                    className="github"
+                    onClick={handleGithubClick}
+                    disabled={loading}>
+                    {loading ? "Please wait..." : "continue with github"}
+                </button>
+                <hr />
                 <p>or use your email</p>
                 <form onSubmit={handleSignUp}>
 
