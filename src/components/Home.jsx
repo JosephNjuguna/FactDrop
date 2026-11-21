@@ -92,7 +92,7 @@ function Home() {
                     )}
                     {activeTab === "trending" && <TrendingFacts userEmail={userEmail}/>}
                     {activeTab === "liked" && <FactsYouLiked userEmail={userEmail}/>}
-                    {activeTab === "profile" && <Profile />}
+                    {activeTab === "profile" && <Profile userEmail={userEmail}/>}
                 </div>
 
             </main>
