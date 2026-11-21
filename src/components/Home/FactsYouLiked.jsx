@@ -3,32 +3,37 @@ import { collection, query, where, getDocs, doc, updateDoc, arrayUnion } from "f
 import { db } from "../../firebase";
 
 function FactsYouLiked({ userEmail }) {
-    //passing userEmail as prop so we can use it to find facts liked by the user
-    const [likedFacts, setLikedFacts] = useState([]);
+    const [facts, setFacts] = useState([]); // facts the user liked OR commented on
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const loadLikedFacts = async () => {
-            try {
-                // Firestore filters for us: only facts where likedBy contains this user
-                const likedFactsQuery = query(
-                    collection(db, "facts"),
-                    where("likedBy", "array-contains", userEmail)
-                );
-                const snapshot = await getDocs(likedFactsQuery);
+        if (!userEmail) return; // wait until auth gives us an email
 
-                setLikedFacts(
-                    snapshot.docs.map((factDoc) => ({ id: factDoc.id, ...factDoc.data() }))
-                );
+        const loadFacts = async () => {
+            setLoading(true);
+            try {
+                const snapshot = await getDocs(collection(db, "facts"));
+
+                const myFacts = snapshot.docs
+                    .map((d) => ({ id: d.id, ...d.data() }))
+                    .filter((fact) => {
+                        const liked = (fact.likedBy ?? []).includes(userEmail);
+                        const commented = (fact.comments ?? []).some(
+                            (c) => c.author === userEmail
+                        );
+                        return liked || commented;
+                    });
+
+                setFacts(myFacts);
             } catch (err) {
                 console.error(err);
-                setError("Couldn't load your liked facts.");
+                setError("Couldn't load your facts.");
             } finally {
                 setLoading(false);
             }
         };
-        loadLikedFacts();
+        loadFacts();
     }, [userEmail]);
 
     if (loading) {
@@ -37,21 +42,22 @@ function FactsYouLiked({ userEmail }) {
     if (error) {
         return <p className="text-red-500">{error}</p>;
     }
-    if (likedFacts.length === 0) {
-        return <p className="text-gray-500">You haven't liked any facts yet.</p>;
+    if (facts.length === 0) {
+        return (
+            <p className="text-gray-500">
+                You haven't liked or commented on any facts yet.
+            </p>
+        );
     }
 
     return (
         <div className="space-y-4">
-            {likedFacts.map((fact) => (
-                //loop through the liked facts and show them
-                // using the card component below.
+            {facts.map((fact) => (
                 <LikedFactCard key={fact.id} fact={fact} userEmail={userEmail} />
             ))}
         </div>
     );
 }
-
 function LikedFactCard({ fact, userEmail }) {
     const [comments, setComments] = useState(fact.comments ?? []);
     const [commentsOpen, setCommentsOpen] = useState(false);
