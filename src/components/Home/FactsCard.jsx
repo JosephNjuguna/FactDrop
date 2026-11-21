@@ -1,47 +1,66 @@
 import { useState } from "react";
-import { doc, setDoc, arrayUnion, serverTimestamp } from "firebase/firestore";
+import { doc, setDoc, arrayUnion, arrayRemove, serverTimestamp } from "firebase/firestore";
 import { db } from "../../firebase";
 
 function FactCard({ fact, userEmail, onLiked }) {
-    const [isLiking, setIsLiking] = useState(false);//stop user from double clicking :  tracking state.
+    const initialLikedBy = fact.likedBy ?? [];
+
+    const [userHasLiked, setUserHasLiked] = useState(
+        initialLikedBy.includes(userEmail)
+    );
+    const [likeCount, setLikeCount] = useState(initialLikedBy.length);
+    const [isSaving, setIsSaving] = useState(false); // stops double-click spam
     const [error, setError] = useState(null);
 
-    async function handleLikes(factid) {
-        if (isLiking) return;
-        setIsLiking(true);
+    async function handleLike() {
+        if (isSaving) return;
+
+        const hadLikedBefore = userHasLiked;
+        const likeCountBefore = likeCount;
+        const willBeLiked = !hadLikedBefore;
+
+        setUserHasLiked(willBeLiked);
+        setLikeCount(willBeLiked ? likeCountBefore + 1 : likeCountBefore - 1);
+        setIsSaving(true);
         setError(null);
+        if (willBeLiked) onLiked?.(fact.id);
 
         try {
-            const factRef = doc(db, "facts", String(factid));
             await setDoc(
-                factRef,
+                doc(db, "facts", String(fact.id)),
                 {
                     text: fact.text,
                     category: fact.category,
-                    likedBy: arrayUnion(userEmail),
-                    comments: [],
+                    likedBy: willBeLiked ? arrayUnion(userEmail) : arrayRemove(userEmail),
                     updatedAt: serverTimestamp(),
                 },
                 { merge: true }
             );
-            onLiked(factid);
-            console.log(factid);
-            
         } catch (err) {
             console.error(err);
+            setUserHasLiked(hadLikedBefore);
+            setLikeCount(likeCountBefore);
             setError("Couldn't save your like. Try again.");
-            setIsLiking(false);
+        } finally {
+            setIsSaving(false);
         }
     }
 
     return (
-        <div>
-            <p>category: {fact.category}</p>
-            <p>fact: {fact.text}</p>
-            <button onClick={()=>handleLikes(fact.id)} disabled={isLiking}>
-                {isLiking ? "saving..." : "like"}
-            </button>
-            {error && <p style={{ color: "red" }}>{error}</p>}
+        <div className="rounded-2xl border border-pink-300 p-4">
+            <p className="text-sm text-gray-500">{fact.category}</p>
+            <p className="font-bold">{fact.text}</p>
+
+            <div className="mt-3 flex items-center justify-end gap-2">
+                {error && <p className="text-sm text-red-500">{error}</p>}
+                <button
+                    onClick={handleLike}
+                    className={`rounded-full border px-4 py-1 text-sm ${userHasLiked ? "bg-red-500 text-white" : "bg-white"
+                        }`}
+                >
+                    {userHasLiked ? "liked" : "like fact"}
+                </button>
+            </div>
         </div>
     );
 }
