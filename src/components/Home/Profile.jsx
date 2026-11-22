@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { db, auth } from "../../firebase";
 
 function Profile({ userEmail }) {
+    if (!userEmail) return; // wait until auth gives us an email
+
     const navigate = useNavigate();
     const [likedFacts, setLikedFacts] = useState([]);
     const [commentedFacts, setCommentedFacts] = useState([]); // facts the user commented on

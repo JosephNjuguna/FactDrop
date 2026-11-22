@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../components/Helpers/AuthContext";
 import '../css/facts.css';
 
-import Facts from "./Home/Facts";
+import Facts from "./Home/FactsForYou";
 import FactsYouLiked from "./Home/FactsYouLiked";
 import Profile from "./Home/Profile";
 import TrendingFacts from "./Home/TrendingFacts";

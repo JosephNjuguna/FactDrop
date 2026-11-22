@@ -1,22 +1,24 @@
-# 💡 FactDrop
+
+![FactDrop](./public/banner.png)
 
 Discover random facts, like the ones you love, and join the conversation. FactDrop is a React web app that pulls facts from the [FactFacts API](https://factfacts.com/api/), lets signed-in users save their favourites, and shows what's trending across the community.
 
+![Tests](https://github.com/JosephNjuguna/FactDrop/actions/workflows/test.yml/badge.svg?branch=dev)
+![Coverage](https://codecov.io/gh/JosephNjuguna/FactDrop/branch/dev/graph/badge.svg)
+
+
 ## Links
 
-- **GitHub Repo:**  
-https://github.com/JosephNjuguna/FactDrop
-- **Kanban Board:**  
-https://github.com/users/JosephNjuguna/projects/8
+- **GitHub Repo:**  [FactDrop Repo](https://github.com/JosephNjuguna/FactDrop)
+- **Kanban Board:** [Project Board](https://github.com/users/JosephNjuguna/projects/8)
 - **Figma Prototype:** [Live prototype](https://www.figma.com/proto/9ih6mpfsDjutNFlX7ru2vz/FactDrop?node-id=6-2&t=WSWxJ4Rgvnx4javY-0&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=6%3A2)
 - **Figma Design:**  [UI design files](https://www.figma.com/design/9ih6mpfsDjutNFlX7ru2vz/FactDrop?node-id=0-1&t=WSWxJ4Rgvnx4javY-1)
 
 ## Features
-
-- Sign up and log in with email/password or GitHub
+- **Authentication:** Sign up and log in with email/password or GitHub
 - **Facts For You:** random facts from the FactFacts API
 - **Trending Facts:** community favourites, with a banner when there's nothing trending yet
-- **Liked Facts:** your saved facts, with a banner when you haven't liked any yet
+- **Fact You Liked:** your saved facts, with a banner when you haven't liked any yet
 - **Account Stats:** your activity at a glance, plus a logout button that redirects you out
 
 ## Tech Stack
