@@ -5,6 +5,20 @@ import { vi, describe, it, expect, beforeEach } from "vitest";
 import Home from "./Home";
 
 // ---------- MOCKS ----------
+vi.mock("../firebase", () => ({ auth: {}, db: {}, githubProvider: {} }));
+
+vi.mock("firebase/firestore", () => ({
+    getFirestore: vi.fn(),
+    collection: vi.fn(),
+    doc: vi.fn(),
+    getDoc: vi.fn(() => Promise.resolve({ exists: () => false, data: () => ({}) })),
+    setDoc: vi.fn(() => Promise.resolve()),
+    updateDoc: vi.fn(() => Promise.resolve()),
+}));
+
+vi.mock("../components/Helpers/AuthContext", () => ({
+    useAuth: () => ({ user: { email: "test@example.com" } }),
+}));
 
 // Fake login: always returns a logged-in user
 vi.mock("../components/Helpers/AuthContext", () => ({
