@@ -1,81 +1,73 @@
 @reference "tailwindcss";
 
-main {
-  @apply flex  justify-center min-h-screen bg-blue-100;
-  @apply flex border-gray-100;
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: none;
+}
 
+main {
+  @apply flex items-center justify-center w-full min-h-screen;
+  @apply bg-white m-0 p-0 md:p-4;
 }
 
 .center {
-  @apply flex w-1/2 bg-white;
-  @apply p-4 rounded self-center;
+  @apply flex flex-col w-full min-h-screen;
+  @apply bg-white overflow-hidden;
+  @apply md:flex-row md:min-h-0 md:max-w-4xl md:rounded-2xl md:shadow-lg;
 }
 
 .intro {
-  @apply flex flex-col justify-center;
-  @apply p-4 w-full;
+  @apply flex flex-col justify-center gap-3;
+  @apply md:w-1/2 md:shrink-0;
+  @apply bg-slate-800 text-white p-6 md:p-8;
+}
 
+.intro>p:empty {
+  @apply hidden;
+}
+
+.intro h2 {
+  @apply text-sm font-bold;
+}
+
+.intro>h3 {
+  @apply text-2xl font-bold md:text-3xl;
+}
+
+.intro>div {
+  @apply bg-white/10 rounded-lg p-3;
 }
 
 .auth {
-  @apply flex flex-col justify-center;
-  @apply w-full;
+  @apply flex flex-col justify-center flex-1;
+  @apply p-6 md:p-8;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 .swicthAuthMode {
-  @apply flex gap-1 rounded-xl bg-gray-200 p-1 mb-4;
+  @apply flex gap-2 mb-4;
 }
 
-/* every tab */
 .swicthAuthMode p {
   @apply flex-1 cursor-pointer rounded-lg py-2 text-center text-gray-500 transition;
   @apply hover:text-black;
 }
 
-/* the selected tab (React adds the "active" class) */
 .swicthAuthMode p.active {
-  @apply bg-white font-bold text-black shadow;
+  @apply border border-red-500 font-bold text-red-600;
 }
 
-/* the clickable links at the bottom of each form */
+.SignUp,
+.SignIn {
+  @apply flex flex-col gap-3 w-full;
+}
+
 .SignUp b,
 .SignIn b {
-  @apply cursor-pointer text-blue-600 hover:underline;
-}
-
-
-
-
-
-
-
-
-
-
-
-.SignUp {
-  @apply bg-blue-50;
-  @apply p-4 w-full;
-}
-
-
-
-.SignIn {
-  @apply bg-blue-50;
-  @apply p-4 w-full;
+  @apply cursor-pointer text-red-600 hover:underline;
 }
 
 .auth input {
@@ -83,16 +75,13 @@ main {
 }
 
 .auth .github {
-  @apply rounded-lg bg-blue-500 px-4 py-2 font-semibold text-white hover:bg-blue-700;
-  @apply w-full;
+  @apply w-full rounded-lg bg-slate-800 px-4 py-2 font-semibold text-white hover:bg-slate-700;
 }
 
 .auth .authbutton {
-  @apply rounded-lg bg-red-600 px-4 py-2 font-semibold text-white hover:bg-blue-700;
-  @apply w-full
+  @apply w-full rounded-lg px-4 py-2 font-semibold text-white;
+  @apply bg-linear-to-r from-red-500 to-pink-500 hover:opacity-90;
 }
-
-
 
 .error {
   @apply text-sm text-red-600;

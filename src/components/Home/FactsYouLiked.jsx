@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { collection, query, where, getDocs, doc, updateDoc, arrayUnion } from "firebase/firestore";
+import { collection,getDocs, doc, updateDoc, arrayUnion } from "firebase/firestore";
 import { db } from "../../firebase";
 
 function FactsYouLiked({ userEmail }) {
@@ -95,13 +95,13 @@ function LikedFactCard({ fact, userEmail }) {
     }
 
     return (
-        <div className="rounded-2xl border border-pink-300 p-4">
+        <div className="rounded-2xl border border-pink-300 p-4 m-5 shadow-lg">
             <p className="text-sm text-gray-500">{fact.category}</p>
             <p className="font-bold">{fact.text}</p>
 
             <div className="mt-3 flex justify-end gap-2">
                 <span className="rounded-full border px-4 py-1 text-sm">
-                    Likes · {fact.likedBy.length}
+                    Likes · {(fact.likedBy ?? []).length}
                 </span>
                 <button
                     onClick={() => setCommentsOpen(!commentsOpen)}

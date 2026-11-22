@@ -137,10 +137,7 @@ function TrendingFactCard({ fact, userEmail, justChanged, onLike }) {
     }
 
     return (
-        <div
-            className={`rounded-2xl border border-pink-300 p-4 transition-colors ${justChanged ? "bg-yellow-100" : ""
-                }`}
-        >
+        <div className={` shadow-lg rounded-2xl border border-pink-300 p-4 m-5 transition-colors ${justChanged ? "bg-yellow-100" : ""}`}>
             <p className="text-sm text-gray-500">{fact.category}</p>
             <p className="font-bold">{fact.text}</p>
 

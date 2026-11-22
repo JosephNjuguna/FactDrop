@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../components/Helpers/AuthContext";
 import '../css/facts.css';
 
-import Facts from "./Home/Facts";
+import Facts from "./Home/FactsForYou";
 import FactsYouLiked from "./Home/FactsYouLiked";
 import Profile from "./Home/Profile";
 import TrendingFacts from "./Home/TrendingFacts";
@@ -69,8 +69,7 @@ function Home() {
     return (
         <>
             <main>
-                <div className="center">
-
+                <div className="factscenter">
                     <div className="factsNav">
                         {TABS.map((tab) => (
                             <button
@@ -92,9 +91,7 @@ function Home() {
                     {activeTab === "liked" && <FactsYouLiked userEmail={userEmail}/>}
                     {activeTab === "profile" && <Profile userEmail={userEmail}/>}
                 </div>
-
             </main>
-
         </>
     )
 }

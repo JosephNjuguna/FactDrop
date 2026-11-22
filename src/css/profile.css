@@ -1,0 +1,49 @@
+@reference "tailwindcss";
+
+.profile {
+    @apply mx-auto flex w-full max-w-2xl flex-col items-center gap-5;
+    /* @apply rounded-3xl border border-pink-300 bg-white; */
+    @apply px-4 py-8 text-center sm:px-8 sm:py-10;
+}
+
+.profile-label {
+    @apply text-sm text-slate-500;
+}
+
+.profile-email {
+    @apply -mt-3 break-all text-lg font-extrabold text-[#1e2a44] sm:text-2xl;
+    text-shadow: 0 6px 16px rgba(124, 58, 237, 0.2);
+}
+
+.profile-stats {
+    @apply flex flex-wrap items-center justify-center gap-3 sm:gap-4;
+}
+
+
+.profile-stat {
+    @apply min-w-28 rounded-2xl px-6 py-3;
+    @apply bg-linear-to-b from-indigo-50 to-violet-100;
+}
+
+.profile-stat-number {
+    @apply text-xl font-extrabold text-[#1e2a44];
+}
+
+.profile-stat-label {
+    @apply text-sm text-slate-500;
+}
+
+.profile-signout {
+    @apply mt-1 cursor-pointer rounded-full bg-red-600 px-8 py-3;
+    @apply font-bold text-white transition;
+    @apply hover:bg-red-700 active:scale-95;
+}
+
+
+.profile-status {
+    @apply text-center text-slate-500;
+}
+
+.profile-error {
+    @apply text-center text-red-600;
+}

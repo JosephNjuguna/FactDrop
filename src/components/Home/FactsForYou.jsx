@@ -2,6 +2,19 @@ import { useState } from "react";
 import { doc, setDoc, arrayUnion, arrayRemove, serverTimestamp } from "firebase/firestore";
 import { db } from "../../firebase";
 
+function Facts({ facts, updatelikedCard,  userEmail, factsError }) {
+    return (
+        <div className="FactsList">
+            <ul className="Facts">
+                {facts.map((fact) => (
+                    <FactCard key={fact.id} fact={fact} onLiked={updatelikedCard} userEmail={userEmail}/>
+                ))}
+            </ul>
+            <p>{factsError}</p>
+        </div>
+    );
+}
+
 function FactCard({ fact, userEmail, onLiked }) {
     const initialLikedBy = fact.likedBy ?? [];
 
@@ -47,7 +60,7 @@ function FactCard({ fact, userEmail, onLiked }) {
     }
 
     return (
-        <div className="rounded-2xl border border-pink-300 p-4">
+        <div className="rounded-2xl border border-pink-300 p-4 m-5 shadow-lg">
             <p className="text-sm text-gray-500">{fact.category}</p>
             <p className="font-bold">{fact.text}</p>
 
@@ -65,4 +78,4 @@ function FactCard({ fact, userEmail, onLiked }) {
     );
 }
 
-export default FactCard;
+export default Facts
