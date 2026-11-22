@@ -77,23 +77,23 @@ function Profile({ userEmail }) {
 
     return (
         <div className="profile" >
-            <p className="profile-label">Signed in as</p>
+            <p className="profile-label">signed in as:</p>
             <p className="profile-email">{userEmail}</p>
 
             <div className="profile-stats">
                 <div className="profile-stat">
                     <p className="profile-stat-number">{likedFacts.length}</p>
-                    <p className="profile-stat-label">Liked facts</p>
+                    <p className="profile-stat-label">liked facts</p>
                 </div>
 
                 <div className="profile-stat">
                     <p className="profile-stat-number">{totalComments}</p>
-                    <p className="profile-stat-label">Comments</p>
+                    <p className="profile-stat-label">comments</p>
                 </div>
             </div>
 
             <button className="profile-signout" onClick={handleSignOut}>
-                Sign out
+                Sign Out
             </button>
         </div>
     );

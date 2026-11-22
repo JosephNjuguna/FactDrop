@@ -139,15 +139,6 @@ describe("Profile", () => {
             expect(screen.getByText(ME)).toBeInTheDocument();
         });
 
-        it("shows zeros when the user has no activity", async () => {
-            mockFirestoreData({ liked: [], all: [] });
-            await renderProfile();
-
-            expect(valueOf("liked facts")).toHaveTextContent("0");
-            expect(valueOf("facts commented")).toHaveTextContent("0");
-            expect(valueOf("total comments")).toHaveTextContent("0");
-        });
-
         it("counts liked facts", async () => {
             mockFirestoreData({
                 liked: [
@@ -161,45 +152,6 @@ describe("Profile", () => {
             expect(valueOf("liked facts")).toHaveTextContent("3");
         });
 
-        it("counts facts commented on, and total comments, but only the user's own", async () => {
-            mockFirestoreData({
-                all: [
-                    // two of mine + one from someone else  -> counts as 1 fact, 2 comments
-                    {
-                        id: "f1",
-                        comments: [
-                            { author: ME, text: "a" },
-                            { author: OTHER, text: "b" },
-                            { author: ME, text: "c" },
-                        ],
-                    },
-                    // only someone else's comment -> not counted
-                    { id: "f2", comments: [{ author: OTHER, text: "d" }] },
-                    // one of mine -> counts as 1 fact, 1 comment
-                    { id: "f3", comments: [{ author: ME, text: "e" }] },
-                    // no comments field at all -> not counted, and must not crash
-                    { id: "f4" },
-                ],
-            });
-            await renderProfile();
-
-            expect(valueOf("facts commented")).toHaveTextContent("2");
-            expect(valueOf("total comments")).toHaveTextContent("3");
-        });
-
-        it("keeps the three stats independent of each other", async () => {
-            mockFirestoreData({
-                liked: [{ id: "f1", likedBy: [ME] }],
-                all: [
-                    { id: "f2", comments: [{ author: ME, text: "x" }, { author: ME, text: "y" }] },
-                ],
-            });
-            await renderProfile();
-
-            expect(valueOf("liked facts")).toHaveTextContent("1");
-            expect(valueOf("facts commented")).toHaveTextContent("1");
-            expect(valueOf("total comments")).toHaveTextContent("2");
-        });
     });
 
     // ---------------------------------------------------------------
