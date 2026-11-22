@@ -95,7 +95,7 @@ function LikedFactCard({ fact, userEmail }) {
     }
 
     return (
-        <div className="rounded-2xl border border-pink-300 p-4">
+        <div className="rounded-2xl border border-pink-300 p-4 m-5 shadow-lg">
             <p className="text-sm text-gray-500">{fact.category}</p>
             <p className="font-bold">{fact.text}</p>
 

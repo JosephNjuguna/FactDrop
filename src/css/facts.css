@@ -1,16 +1,12 @@
 @reference "tailwindcss";
 
-main {
-    @apply flex flex-col;
+.factscenter {
+    @apply flex flex-col mx-auto;
+    @apply w-full h-screen overflow-y-auto;
+    @apply md:w-1/2;
 }
 
-.center {
-    @apply flex flex-col;
-    @apply bg-white h-screen w-1/2;
-    
-}
-
-.factsNav{
+.factsNav {
     @apply flex flex-row justify-between w-full;
     @apply p-4;
 }

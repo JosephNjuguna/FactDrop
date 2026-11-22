@@ -69,8 +69,7 @@ function Home() {
     return (
         <>
             <main>
-                <div className="center">
-
+                <div className="factscenter">
                     <div className="factsNav">
                         {TABS.map((tab) => (
                             <button
@@ -92,9 +91,7 @@ function Home() {
                     {activeTab === "liked" && <FactsYouLiked userEmail={userEmail}/>}
                     {activeTab === "profile" && <Profile userEmail={userEmail}/>}
                 </div>
-
             </main>
-
         </>
     )
 }

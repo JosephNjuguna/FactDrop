@@ -4,8 +4,10 @@ import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { db, auth } from "../../firebase";
 
+import "../../css/profile.css";
+
 function Profile({ userEmail }) {
-    if (!userEmail) return; // wait until auth gives us an email
+    if (!userEmail) return; // to ensure the user email is alwaysavailable
 
     const navigate = useNavigate();
     const [likedFacts, setLikedFacts] = useState([]);
@@ -62,10 +64,10 @@ function Profile({ userEmail }) {
     );
 
     if (loading) {
-        return <p className="text-gray-500">Loading...</p>;
+        return <p className="profile-status">Loading...</p>;
     }
     if (error) {
-        return <p className="text-red-500">{error}</p>;
+        return <p className="profile-error">{error}</p>;
     }
 
     async function handleSignOut() {
@@ -74,25 +76,25 @@ function Profile({ userEmail }) {
     }
 
     return (
-        <div className="space-y-4">
+        <div className="profile" >
+            <p className="profile-label">Signed in as</p>
+            <p className="profile-email">{userEmail}</p>
 
-            <p>signed in as: </p>
-            <p>{userEmail}</p>
+            <div className="profile-stats">
+                <div className="profile-stat">
+                    <p className="profile-stat-number">{likedFacts.length}</p>
+                    <p className="profile-stat-label">Liked facts</p>
+                </div>
 
-            <hr />
-            <p>{likedFacts.length}</p>
-            <p>liked facts</p>
+                <div className="profile-stat">
+                    <p className="profile-stat-number">{totalComments}</p>
+                    <p className="profile-stat-label">Comments</p>
+                </div>
+            </div>
 
-            <hr />
-            <p>{commentedFacts.length}</p>
-            <p>facts commented</p>
-
-            <hr />
-            <p>{totalComments}</p>
-            <p>total comments</p>
-
-            <button onClick={handleSignOut}>Sign Out</button>
-
+            <button className="profile-signout" onClick={handleSignOut}>
+                Sign out
+            </button>
         </div>
     );
 

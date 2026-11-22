@@ -8,17 +8,12 @@ function Auth() {
 
     return (
         <>
-            <main>
+            <main className="factscenter">
                 <div className="center">
                     <div className="intro">
-                        <p></p>
                         <h2>FactDrop</h2>
                         <h3>A new fact every time you open the app.</h3>
                         <p>Like the ones you love, and share what you think in the comments.</p>
-                        <div>
-                            <p>Fact of the day</p>
-                            <h3>An octopus has three hearts, and two of them stop beating when it swims.</h3>
-                        </div>
                     </div>
 
                     <div className="auth">
