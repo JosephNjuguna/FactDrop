@@ -8,7 +8,7 @@ Discover random facts, like the ones you love, and join the conversation. FactDr
 
 
 ## Links
-- **Live Page Link:** [Vercel](https://fact-drop-git-dev-josephnjugunas-projects.vercel.app/)
+- **Live Page Link:** [Vercel](https://fact-drop-six.vercel.app/)
 - **GitHub Repo:**  [FactDrop Repo](https://github.com/JosephNjuguna/FactDrop)
 - **Kanban Board:** [Project Board](https://github.com/users/JosephNjuguna/projects/8)
 - **Figma Prototype:** [Live prototype](https://www.figma.com/proto/9ih6mpfsDjutNFlX7ru2vz/FactDrop?node-id=6-2&t=WSWxJ4Rgvnx4javY-0&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=6%3A2)
